@@ -8,6 +8,7 @@ namespace Testdrive
         {
 
             Console.WriteLine("Hello World!");
+            Console.WriteLine("This is just a flying visit.");
         }
     }
 }

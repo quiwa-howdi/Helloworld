@@ -1,0 +1,56 @@
+pages底下 >新增項目> razor模型
+local  /form
+
+預設>啟動瀏覽器 可修改初始頁面
+
+執行順序 >_viewstart(引入預設layout)>_viewimport(幫忙引入預設namespace)>pages
+
+pages 內順序  onget(初始呈現，例如撈資料)
+
+ViewData["Title"]="ABC" u,4
+TempData[""] 跨頁面，接到後就消失
+
+onpost 儲存之後觸發
+
+
+
+資料傳入有三種
+
+Requeat.form["name"]
+
+當作onpost的input
+public void Onpost(string name)  name 為前端設計的name="name" 必須要和前面元件的命名規則一樣
+
+叫net.core幫我們丟
+(全域變數)
+
+[BindProperty]
+public Name (get; set;)
+
+
+
+
+**asp-
+
+asp-for 請net.core幫我們rendon值 (id、name..etc，輸入後端的全域變數即可)
+
+
+
+button asp-page-handler: 給onpost的命名 
+public void OnPostForm2()
+
+
+
+
+
+
+
+用asp建立下拉選單
+public enum Sex{none,Male,Female}
+
+
+
+前端
+
+<selet ....  asp-items:>
+

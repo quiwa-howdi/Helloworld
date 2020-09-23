@@ -1,0 +1,47 @@
+﻿@page
+@model HoroscopePageModel
+@{
+}
+<form>
+    <div class="page-title">
+        <h3>星座查詢</h3>
+    </div>
+    <div >
+        <div class="page-content">
+            <div class="page-query">
+                <label asp-for="keyword"></label>
+                <input class="form-control" asp-for="keyword" />
+                <span asp-validation-for="keyword" class="small text-danger"></span>
+                <button class="btn btn-primary"asp-page-handler="Query">查詢</button>
+                <button class="btn btn-primary">新增</button>
+                <button class="btn btn-primary">編輯</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:1px"></th>
+                            <th class="text-center" style="width:1px">#</th>
+                            <th class="text-nowrap" style="width:15%">星座名稱</th>
+                            <th class="text-nowrap" style="width:70%">星座描述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach (var item in Model.notes)*@
+                        <tr>
+                            <td calss="align-middle text-center "></td>
+                            <td class="align-middle text-center">1</td>
+                            <td class="align-middle text-nowrap">摩羯座</td>
+                            <td class="align-middle text-wrap">描述</td>
+                            
+                        </tr>
+                        </tbody>
+
+                </table>
+                <div ><label class="text-center">@Model.Message</label></div>
+            </div>
+        </div>
+
+    </div>
+
+</form>

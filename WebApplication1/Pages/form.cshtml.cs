@@ -46,10 +46,7 @@ namespace WebApplication1
             Message = "Ä²µoOnPostEdit";
         }
 
-        public void OnPostView()
-        {
-            Message = "Ä²µoOnPostView";
-        }
+
 
     }
 }

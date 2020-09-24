@@ -1,21 +1,36 @@
-﻿@page
+﻿@page 
 @model HoroscopePageModel
 @{
 }
-<form>
+<form method="post" >
+    @* 預設method是get，所以不會觸發任何post，一定要加上 *@
     <div class="page-title">
-        <h3>星座查詢</h3>
+        <h3>星座個性查詢</h3>
     </div>
     <div >
         <div class="page-content">
             <div class="page-query">
-                <label asp-for="keyword"></label>
-                <input class="form-control" asp-for="keyword" />
-                <span asp-validation-for="keyword" class="small text-danger"></span>
-                <button class="btn btn-primary"asp-page-handler="Query">查詢</button>
-                <button class="btn btn-primary">新增</button>
-                <button class="btn btn-primary">編輯</button>
+                <div class="form-group">
+                    <label asp-for="Selection"></label>
+                    <select class="form-control" asp-for="Selection" asp-items="@Html.GetEnumSelectList(typeof(Horoscope))">
+                        @*<option value="">NONE</option>*@
+                        @* 為了要有能判斷的預設值， *@
+                    </select>
+                    <span asp-validation-for="Selection" class="small text-danger"></span>
+                </div>
+                <label asp-for="Keyword"></label>
+                <input class="form-control" asp-for="Keyword" />
+                <span asp-validation-for="Keyword" class="small text-danger"></span><br />
+                <label asp-for="Property"></label>
+                <input class="form-control" asp-for="Property" /><br />
+                <button class="btn btn-primary" asp-page-handler="Query">查詢</button>
+                <button class="btn btn-primary" asp-page-handler="New">新增</button>
+                <button class="btn btn-primary" asp-page-handler="Edit">編輯</button>
+
             </div>
+
+            <br />
+            
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -23,22 +38,22 @@
                             <th class="text-center" style="width:1px"></th>
                             <th class="text-center" style="width:1px">#</th>
                             <th class="text-nowrap" style="width:15%">星座名稱</th>
-                            <th class="text-nowrap" style="width:70%">星座描述</th>
+                            <th class="text-nowrap" style="width:70%">星座特質</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <!--<tbody>-->
                         @*@foreach (var item in Model.notes)*@
-                        <tr>
+                        <!--<tr>
                             <td calss="align-middle text-center "></td>
                             <td class="align-middle text-center">1</td>
                             <td class="align-middle text-nowrap">摩羯座</td>
                             <td class="align-middle text-wrap">描述</td>
-                            
+
                         </tr>
-                        </tbody>
+                    </tbody>-->
 
                 </table>
-                <div ><label class="text-center">@Model.Message</label></div>
+                <h3 class="clearfix">@Model.Message<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper>()</h3>
             </div>
         </div>
 

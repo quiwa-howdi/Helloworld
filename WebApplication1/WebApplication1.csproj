@@ -4,4 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Update="Pages\horoscope - 複製 - 複製.cshtml.cs">
+      <DependentUpon>horoscope - 複製.cshtml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\horoscope - 複製.cshtml.cs">
+      <DependentUpon>horoscope.cshtml.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

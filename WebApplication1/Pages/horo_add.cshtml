@@ -1,0 +1,36 @@
+﻿@page 
+@model Horo_AddPageModel
+@{
+}
+<form method="post" >
+    @* 預設method是get，所以不會觸發任何post，一定要加上 *@
+
+   
+               
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:1px"></th>
+                            <th class="text-center" style="width:1px">#</th>
+                            <th class="text-nowrap" style="width:15%">星座名稱</th>
+                            <th class="text-nowrap" style="width:70%">星座特質</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach (var item in Model.notes)*@
+                        <tr>
+                            <td calss="align-middle text-center "></td>
+                            <td class="align-middle text-center">1</td>
+                            <td class="align-middle text-nowrap">@Model.Selection</td>
+                            <td class="align-middle text-wrap">@Model.Property</td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+                <h3 class="clearfix">@Model.Message</h3>
+            </div>
+
+
+</form>

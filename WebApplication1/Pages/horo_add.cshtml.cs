@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Http.Extensions;
 
 namespace WebApplication1
 {
-
-   
     public class Horo_AddPageModel : PageModel
     {
         [BindProperty]
@@ -21,57 +19,58 @@ namespace WebApplication1
 
         [BindProperty]
         [Display(Name = "狀態"), Required(ErrorMessage = "必須選擇")]
-        public string Selection { get; set; } //?才能是null，才能被判別，否則會被填值或是empty
+        public Horoscope Selection { get; set; } //?才能是null，才能被判別，否則會被填值或是empty
         [BindProperty]
         [Display(Name = "作者")]
         public string Author { get; set; }
-
-        public void OnGet()
+        public string Pub { get; set; }
+        public string Pubdate { get; set; }
+        public void OnGet(int no,string handler)
         {
             Message = "觸發OnGet";
-            if (TempData["State"].ToString() == "Edit")
+            if (handler == "Edit")
             {
                 ViewData["Title"] = "編輯書目";
-                Selection = TempData["Selection"].ToString();
-                Author = TempData["Property"].ToString();
-                
+                //取書 這邊要先解碼
+                List<Book> books = TempData["books"] as List<Book>;
+                Book editbook = books[no - 1];
+                Selection = editbook.selction;
+                Author = editbook.author;
+                Keyword = editbook.keyword;
+
             }
             else
             {
                 ViewData["Title"] = "新增書目";
             }
-
-
         }
 
-        public void OnPostQuery()
+        public void OnPost(string publisher)
         {
-            Message = "觸發OnPostQuery";
-
             if (ModelState.IsValid)
             {
+                Message = "觸發OnPost";
+                Pub = publisher;
+                Pubdate = Request.Form["publishDate"];
+                TempData["Keyword"] = Keyword;
+                TempData["Selection"] = Selection.ToString();
+                if (Author != null)
+                {
+                    TempData["Property"] = Author;
+                }
+                else
+                {
+                    TempData["Property"] = "";
+                }
+
                 Message += " ，輸入驗證通過";
+                //return Redirect("/horo_add");
             }
             else
             {
                 Message += "驗證沒過";
+                //return Page();
             }
         }
-        public IActionResult OnPostNew()
-        {
-            
-
-            Message = "觸發OnPostNew";
-            return Redirect("/form");
-        }
-        public void OnPostEdit()
-        {
-            Message = "觸發OnPostEdit";
-        }
-        public void OnPost()
-        {
-            Message = "觸發OnPost";
-        }
-
     }
 }

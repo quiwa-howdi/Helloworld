@@ -1,12 +1,13 @@
 ﻿@page 
 @model HoroscopePageModel
 @{
+var rownum = 1;
 }
 <form method="post" >
-    @* 預設method是get，所以不會觸發任何post，一定要加上 *@
-    @*<div class="page-title">
-        <h3>一般頁面此處放置標題</h3>
-    </div>*@
+     @*預設method是get，所以不會觸發任何post，一定要加上*@ 
+    <div class="page-title text-center">
+        <h3>查詢畫面</h3>
+    </div>
     <div >
         <div class="page-content">
             <div class="page-query">
@@ -24,9 +25,7 @@
                 <label asp-for="Author"></label>
                 <input class="form-control" asp-for="Author" /><br />
                 <button class="btn btn-primary" asp-page-handler="Query">查詢</button>
-                <a class="btn btn-primary" asp-page="horo_add"  asp-fragment="add">新增</a>  
-                @* asp-route? *@
-                <button class="btn btn-primary" asp-page-handler="Edit">編輯</button>
+                <a class="btn btn-primary" asp-page="horo_add"  >新增</a>  
                 
             </div>
 
@@ -41,22 +40,26 @@
                             <th class="text-nowrap" style="width:50%">書名</th>
                             <th class="text-nowrap" style="width:15%">書籍狀態</th>
                             <th class="text-nowrap" style="width:15%">作者</th>
+                            <th style="width:15%" ></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (var item in Model.notes)*@
+                        @foreach (var item in Model.Books.Where(j=>j.isshown))
+                        {
                         <tr>
                             <td calss="align-middle text-center "></td>
-                            <td class="align-middle text-center">1</td>
-                            <td class="align-middle text-wrap">@Model.Keyword</td>
-                            <td class="align-middle text-nowrap">@Model.Selection</td>
-                            <td class="align-middle text-nowrap">@Model.Author</td>
-
+                            <td class="align-middle text-center">@(rownum++)</td>
+                            <td class="align-middle text-wrap">@item.keyword</td>
+                            <td class="align-middle text-nowrap">@item.selction</td>
+                            <td class="align-middle text-nowrap">@item.author</td>
+                            <td class="align-middle text-nowrap"><a class="btn btn-primary" asp-page="horo_add" asp-page-handler="Edit"  asp-route-no="@(rownum-1)">編輯</a></td>
                         </tr>
+                       
+                        }
                     </tbody>
 
                 </table>
-                <h5 class="clearfix">@Model.Message</h5>
+                <h5 style="color:gray" class="clearfix">@Model.Message</h5>
             </div>
         </div>
 

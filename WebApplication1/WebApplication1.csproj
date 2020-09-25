@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Pages\horoscope - 複製 - 複製.cshtml.cs">
       <DependentUpon>horoscope - 複製.cshtml.cs</DependentUpon>
     </Compile>

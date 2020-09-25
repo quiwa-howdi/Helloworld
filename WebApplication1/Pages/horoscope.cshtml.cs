@@ -10,51 +10,35 @@ namespace WebApplication1
 {
 
     public enum Horoscope {
-        [Display(Name = "牧羊座 ")]
-        Aries,
-        [Display(Name = "金牛座")]
-        Taurus,
-        [Display(Name = "雙子座")]
-        Gemini,
-        [Display(Name = "巨蟹座")]
-        Cancer,
-        [Display(Name = "獅子座")]
-        Leo,
-        [Display(Name = "處女座")]
-        Virgo,
-        [Display(Name = "天秤座")]
-        Libra,
-        [Display(Name = "天蠍座")]
-        Scorpio,
-        [Display(Name = "射手座")]
-        Sagittarius,
-        [Display(Name = "摩羯座")]
-        Capricorn,
-        [Display(Name = "水瓶座")]
-        Aquarius,
-        [Display(Name = "雙魚座")]
-        Pisces
+        [Display(Name = "全部")]
+        All,
+        [Display(Name = "已被借閱")]
+        Borrowed,
+        [Display(Name = "書在館")]
+        Unborrow,
+
 
     }//放在namespace下，而不是放到class內
     public class HoroscopePageModel : PageModel
     {
         [BindProperty]
-        [Display(Name = "查詢欄位",Prompt = "填入星座"), Required(ErrorMessage = "必須輸入")]
+        [Display(Name = "書名",Prompt = "請填入書籍名稱"), Required(ErrorMessage = "書籍名稱必須輸入")] //??可以直接套用欄位變數嗎
         public string Keyword { get; set; }
         [BindProperty]
         public string Message { get; set; }
 
         [BindProperty]
-        [Display(Name = "星座名稱"), Required(ErrorMessage = "必須選擇")]
+        [Display(Name = "書籍狀態")]//, Required(ErrorMessage = "必須選擇")
         public Horoscope Selection { get; set; } //?才能是null，才能被判別，否則會被填值或是empty
         [BindProperty]
-        [Display(Name = "星座特質")]
-        public string Property { get; set; }
+        [Display(Name = "書籍作者")]
+        public string Author { get; set; }
 
         public void OnGet()
         {
             Message = "觸發OnGet";
-            ViewData["Title"] = "星座介紹";
+            ViewData["Title"] = "書籍借閱系統";
+            TempData["State"] = "";
         }
 
         public void OnPostQuery()
@@ -63,18 +47,18 @@ namespace WebApplication1
 
            
         }
-        public IActionResult OnPostNew()
+        public IActionResult OnPostEdit()
         {
-            Message = "觸發OnPostNew";
+            TempData["State"] = "Edit";
+            Message = "觸發OnPostEdit";
             if (ModelState.IsValid)
             {
                 
                 TempData["Keyword"] = Keyword;
-                //TempData["Message"] = Message;
                 TempData["Selection"] = Selection.ToString();
-                if (Property != null)
+                if (Author != null)
                 {
-                    TempData["Property"] = Property;
+                    TempData["Property"] = Author;
                 }
                 else
                 {
@@ -91,12 +75,12 @@ namespace WebApplication1
             }
             
         }
-        public void OnPostEdit()
+        public void OnPostNew()
         {
-            Message = "觸發OnPostEdit";
+            Message = "觸發OnPostNew";
             if (ModelState.IsValid)
             {
-                Message+= ",星座名稱為:"+(Horoscope)Selection; 
+                Message+= ",書名為:"+(Horoscope)Selection; 
             }
 
                 

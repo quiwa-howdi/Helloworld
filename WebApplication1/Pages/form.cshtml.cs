@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations; // display、驗證資料使用。
 
-namespace WebApplication1
+
+namespace WebApplication1 
 {
 
     public enum Sex { none, Male, Female }//放在namespace下，而不是放到class內

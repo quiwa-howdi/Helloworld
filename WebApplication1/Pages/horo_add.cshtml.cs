@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations; // Display、Required
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace WebApplication1
 {
@@ -13,26 +14,33 @@ namespace WebApplication1
     public class Horo_AddPageModel : PageModel
     {
         [BindProperty]
-        [Display(Name = "查詢欄位",Prompt = "填入星座"), Required(ErrorMessage = "必須輸入")]
+        [Display(Name = "書名",Prompt = "填入書本名稱"), Required(ErrorMessage = "必須輸入")]
         public string Keyword { get; set; }
         [BindProperty]
         public string Message { get; set; }
 
         [BindProperty]
-        [Display(Name = "星座名稱"), Required(ErrorMessage = "必須選擇")]
+        [Display(Name = "狀態"), Required(ErrorMessage = "必須選擇")]
         public string Selection { get; set; } //?才能是null，才能被判別，否則會被填值或是empty
         [BindProperty]
-        [Display(Name = "星座特質")]
-        public string Property { get; set; }
+        [Display(Name = "作者")]
+        public string Author { get; set; }
 
         public void OnGet()
         {
             Message = "觸發OnGet";
-            ViewData["Title"] = "星座介紹";
-            //Keyword = TempData["Keyword"].ToString();
-            Selection = TempData["Selection"].ToString();
-            Property = TempData["Property"].ToString();
-            
+            if (TempData["State"].ToString() == "Edit")
+            {
+                ViewData["Title"] = "編輯書目";
+                Selection = TempData["Selection"].ToString();
+                Author = TempData["Property"].ToString();
+                
+            }
+            else
+            {
+                ViewData["Title"] = "新增書目";
+            }
+
 
         }
 

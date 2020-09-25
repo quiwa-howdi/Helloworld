@@ -4,9 +4,9 @@
 }
 <form method="post" >
     @* 預設method是get，所以不會觸發任何post，一定要加上 *@
-    <div class="page-title">
-        <h3>星座個性查詢</h3>
-    </div>
+    @*<div class="page-title">
+        <h3>一般頁面此處放置標題</h3>
+    </div>*@
     <div >
         <div class="page-content">
             <div class="page-query">
@@ -21,12 +21,13 @@
                 <label asp-for="Keyword"></label>
                 <input class="form-control" asp-for="Keyword" />
                 <span asp-validation-for="Keyword" class="small text-danger"></span><br />
-                <label asp-for="Property"></label>
-                <input class="form-control" asp-for="Property" /><br />
+                <label asp-for="Author"></label>
+                <input class="form-control" asp-for="Author" /><br />
                 <button class="btn btn-primary" asp-page-handler="Query">查詢</button>
-                <button class="btn btn-primary" asp-page-handler="New">新增</button>
+                <a class="btn btn-primary" asp-page="horo_add"  asp-fragment="add">新增</a>  
+                @* asp-route? *@
                 <button class="btn btn-primary" asp-page-handler="Edit">編輯</button>
-
+                
             </div>
 
             <br />
@@ -37,23 +38,25 @@
                         <tr>
                             <th class="text-center" style="width:1px"></th>
                             <th class="text-center" style="width:1px">#</th>
-                            <th class="text-nowrap" style="width:15%">星座名稱</th>
-                            <th class="text-nowrap" style="width:70%">星座特質</th>
+                            <th class="text-nowrap" style="width:50%">書名</th>
+                            <th class="text-nowrap" style="width:15%">書籍狀態</th>
+                            <th class="text-nowrap" style="width:15%">作者</th>
                         </tr>
                     </thead>
-                    <!--<tbody>-->
+                    <tbody>
                         @*@foreach (var item in Model.notes)*@
-                        <!--<tr>
+                        <tr>
                             <td calss="align-middle text-center "></td>
                             <td class="align-middle text-center">1</td>
-                            <td class="align-middle text-nowrap">摩羯座</td>
-                            <td class="align-middle text-wrap">描述</td>
+                            <td class="align-middle text-wrap">@Model.Keyword</td>
+                            <td class="align-middle text-nowrap">@Model.Selection</td>
+                            <td class="align-middle text-nowrap">@Model.Author</td>
 
                         </tr>
-                    </tbody>-->
+                    </tbody>
 
                 </table>
-                <h3 class="clearfix">@Model.Message<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper>()</h3>
+                <h5 class="clearfix">@Model.Message</h5>
             </div>
         </div>
 

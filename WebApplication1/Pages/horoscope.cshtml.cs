@@ -7,20 +7,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations; // Display、Required
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
+using System.Data.SqlClient;
+using WebApplication1.Model;
 
 namespace WebApplication1
 {
 
     public class Book
     {
-        public int idx { get; set; }
-        public Horoscope selction { get; set; }
-        public string keyword { get; set; }
-        public string author { get; set; }
-        public bool isshown { get; set; } = true;
+        public int Idx { get; set; }
+        public Statuses Status { get; set; }
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public bool Isshown { get; set; } = true;
+        public Guid Id { get; set; }
     }
 
-    public enum Horoscope
+    public enum Statuses
     {
         [Display(Name = "其他")]
         Else,
@@ -41,23 +44,18 @@ namespace WebApplication1
 
         [BindProperty]
         [Display(Name = "書籍狀態")]//, Required(ErrorMessage = "必須選擇")
-        public Horoscope Selection { get; set; } //?才能是null，才能被判別，否則會被填值或是empty
+        public Statuses Selection { get; set; } //?才能是null，才能被判別，否則會被填值或是empty
         [BindProperty]
         [Display(Name = "書籍作者")]
         public string Author { get; set; }
 
         public List<Book> Books { get; set; } = new List<Book>();
+        public Model.SqlClass SqlClass = new SqlClass();
 
         public HoroscopePageModel() //建構子，頁面執行前先實作
         {
             // Microsoft.AspNetCore.Mvc.RazorPages.PageModel.TempData.get 傳回 null
-            
             ///先查看tempdata內有沒有資料，沒有的話初始化
-            //var a = TempData["x"];
-            //TempData["x"] = a;
-            //   var b = a.where(x)
-
-
         }
 
         public override void OnPageHandlerExecuting(PageHandlerExecutingContext context)
@@ -67,57 +65,50 @@ namespace WebApplication1
                 Books = JsonConvert.DeserializeObject<List<Book>>(list);
                 TempData.Keep("books");
             }
-            else
+            else  //初始化時，tempdata內無資料，(因為過去在建構子判別)
             {
                 for (var i = 0; i < 5; i++)
                 {
-                    Books.Add(new Book() { idx = 0, selction = (Horoscope)(i % 3), keyword = $"Bookname{i}", author = $"Johnny{i}" });
+                    Books.Add(new Book() { Idx = 0, Status = (Statuses)(i % 3), Name = $"Bookname{i}", Author = $"Johnny{i}" }); // *****初始化條件可以後續優化****
                 }
-                TempData["books"] = JsonConvert.SerializeObject(Books);
-            }
 
+                //Books = SqlClass.Sqlquery();
+                //TempData["books"] = JsonConvert.SerializeObject(Books);
+            }
             base.OnPageHandlerExecuting(context);
         }
 
         public void OnGet()
         {
-            try
-            {
-                Message = "觸發OnGet";
-                ViewData["Title"] = "書籍借閱系統";
-                TempData["RRRRRRR"] = "";
-            }
-            catch (Exception ex)
-            { 
-            
-            }
+            Message = "觸發OnGet";
+            ViewData["Title"] = "書籍借閱系統";
         }
 
         public void OnPostQuery()
         {
-            Books.ForEach(x => x.isshown = false);
-            Books.Where(j => j.selction.Equals(Selection) && j.keyword.Contains(Keyword ?? string.Empty ) && j.author.Contains(Author ?? string.Empty)).ToList().ForEach(k => k.isshown = true);
+            Books.ForEach(x => x.Isshown = false);
+            Books.Where(j => j.Status.Equals(Selection) && j.Name.Contains(Keyword ?? string.Empty) && j.Author.Contains(Author ?? string.Empty)).ToList().ForEach(k => k.Isshown = true);
             Message = "觸發OnPostQuery";
         }
         public void OnPostEdit(int no)//IActionResult
         {
             //TempData["books"] = Books;
             /////傳整本進tempdata 並且傳入button參數
-            //TempData["No"] = no;
-
-         
+            //TempData["No"] = no;  
             //Message = "觸發OnPostEdit";
-           
-
         }
-        public void OnPostNew()
+        public void OnPostDelete(int no)
         {
-           
+            Books = JsonConvert.DeserializeObject<List<Book>>(TempData["books"].ToString());  //不管怎樣都要取出來
+            TempData.Keep("books");// 每次取出來後都建議keep住
+            Books.RemoveAt(no - 1);
+            TempData["books"] = JsonConvert.SerializeObject(Books);
         }
         public void OnPost()
         {
             Message = "觸發OnPost";
         }
+        
 
     }
 }

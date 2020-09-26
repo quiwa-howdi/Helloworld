@@ -7,7 +7,7 @@
     <div class="page-query">
         <div class="form-group">
             <label asp-for="Selection"></label>
-            <select class="form-control" asp-for="Selection" asp-items="@Html.GetEnumSelectList(typeof(Horoscope))">
+            <select class="form-control" asp-for="Selection" asp-items="@Html.GetEnumSelectList(typeof(Statuses))">
             </select>
             <span asp-validation-for="Selection" class="small text-danger"></span>
         </div>
@@ -16,7 +16,7 @@
         <span asp-validation-for="Keyword" class="small text-danger"></span><br />
         <label asp-for="Author"></label>
         <input class="form-control" asp-for="Author" /><br />
-        <div class="row">
+        @*<div class="row">
             <div class="col">
                 <label>出版社</label>
                 <input class="form-control" name="publisher" value="" /><br />
@@ -25,11 +25,11 @@
                 <label>出版日期</label>
                 <input class="form-control" name="publishDate" /><br />
             </div>
-            </div>
-            <button class="btn btn-primary">確認</button>
+        </div>*@
 
 
-        </div>
+        <button class="btn btn-primary">確認</button>
+    </div>
 
         <br />
 
@@ -38,7 +38,7 @@
 
         <div class="table-responsive">
             <table class="table table-hover">
-                <thead>
+                @*<thead>
                     <tr>
                         <th class="text-center" style="width:1px"></th>
                         <th class="text-center" style="width:1px">#</th>
@@ -48,10 +48,10 @@
                         <th class="text-nowrap" style="width:10%">出版社</th>
                         <th class="text-nowrap" style="width:10%">出版日期</th>
                     </tr>
-                </thead>
-                <tbody>
+                </thead>*@
+                <!--<tbody>-->
                     @*@foreach (var item in Model.notes)*@
-                    <tr>
+                    <!--<tr>
                         <td calss="align-middle text-center "></td>
                         <td class="align-middle text-center">1</td>
                         <td class="align-middle text-wrap">@Model.Keyword</td>
@@ -60,7 +60,7 @@
                         <td class="align-middle text-nowrap">@Model.Pub</td>
                         <td class="align-middle text-nowrap">@Model.Pubdate</td>
                     </tr>
-                </tbody>
+                </tbody>-->
 
             </table>
             <h3 style="color:gray" class="clearfix">@Model.Message</h3>
